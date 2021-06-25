@@ -19,6 +19,20 @@ task("accounts", "Prints the list of accounts", async () => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  solidity: "0.8.4",  
+  networks:{
+    ganache1:{
+      url:"http://localhost:8545",
+      accounts:{
+        mnemonic: "song ice copper resemble donate essay evidence runway warfare insane wisdom reflect"
+      }
+    },
+    ganache2:{
+      url:"http://localhost:8544",
+      accounts:{
+        mnemonic: "song ice copper resemble donate essay evidence runway warfare insane wisdom reflect"
+      }
+    }
+  }
 };
 
