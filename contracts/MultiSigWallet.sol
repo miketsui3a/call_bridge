@@ -74,20 +74,19 @@ contract MultiSigWallet {
         public
         onlyOwner
     {
-        if(transactions[txHash].to!=address(0)){
-            confirmTransaction(txHash);
-            return;
+        if(transactions[txHash].to==address(0)){
+            transactions[txHash] = Transaction({
+                to: _to,
+                value: _value,
+                data: _data,
+                executed: false,
+                numConfirmations: 0
+             });
+             emit SubmitTransaction(msg.sender, txHash, _to, _value, _data);
+
         }
+     confirmTransaction(txHash);   
 
-        transactions[txHash] = Transaction({
-            to: _to,
-            value: _value,
-            data: _data,
-            executed: false,
-            numConfirmations: 0
-        });
-
-        emit SubmitTransaction(msg.sender, txHash, _to, _value, _data);
     }
 
     function confirmTransaction(string memory txHash)

@@ -1,4 +1,5 @@
-const config = require("../config/localhost.json")
+const config = require("../config/config.json")
+const secret = require("../config/secret.json")
 const { ethers } = require("hardhat");
 
 const Web3 = require('web3')
@@ -9,12 +10,31 @@ const Stalker = require("./stalker.js")
 
 async function main() {
 
-    const mainProvider = ethers.getDefaultProvider("ws://localhost:8545")
-    const sideProvider = ethers.getDefaultProvider("ws://localhost:8544")
+    const network = process.argv[2]
 
-    const stalker1 = new Stalker(mainProvider,sideProvider,config)
+    let validNetwork = false
+    const keys = Object.keys(secret)
+    for (key of keys) {
+        if (key == network) {
+            validNetwork = true
+            break
+        }
+    }
+
+    if (!validNetwork) {
+        throw new Error("wrong network")
+    }
+
+    const mainProvider = new ethers.providers.WebSocketProvider("ws://" + secret[network].url)
+
+
+    const sideProvider = new ethers.providers.WebSocketProvider("ws://localhost:8544")
+    const stalker1 = new Stalker(mainProvider, sideProvider, config, network, secret)
     stalker1.run()
 
 }
 
-main()  
+main().catch((error) => {
+    console.error(error);
+    process.exit(1);
+});

@@ -32,6 +32,24 @@ module.exports = {
       accounts:{
         mnemonic: "song ice copper resemble donate essay evidence runway warfare insane wisdom reflect"
       }
+    },
+    rinkeby:{
+    url:"https://rinkeby.infura.io/v3/50aa19ab84df4855923c094d5b4d0c2a",
+      accounts:{
+        mnemonic: "song ice copper resemble donate essay evidence runway warfare insane wisdom reflect"
+      }
+    },
+    ropsten:{
+      url:"https://ropsten.infura.io/v3/50aa19ab84df4855923c094d5b4d0c2a",
+      accounts:{
+        mnemonic: "song ice copper resemble donate essay evidence runway warfare insane wisdom reflect"
+      }
+    },
+    bscTest:{
+      url:"https://data-seed-prebsc-1-s1.binance.org:8545",
+      accounts:{
+        mnemonic: "song ice copper resemble donate essay evidence runway warfare insane wisdom reflect"
+      }
     }
   }
 };

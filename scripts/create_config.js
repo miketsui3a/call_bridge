@@ -7,5 +7,16 @@ module.exports = function(data,network){
   if (!fs.existsSync(dirname)) {
     fs.mkdirSync(dirname);
   }
-  fs.writeFileSync(`${dirname}/${network}.json`, JSON.stringify(data));
+
+  let file
+
+  try{
+    file = require("../config/config.json")
+  }catch(e){
+    file = {}
+  }
+
+  file[network] = data
+
+  fs.writeFileSync(`${dirname}/config.json`, JSON.stringify(file));
 }

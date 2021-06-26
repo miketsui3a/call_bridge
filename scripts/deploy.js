@@ -1,5 +1,4 @@
 const {ethers, artifacts} = require("hardhat");
-
 const createConfig = require("./create_config")
 
 async function deploy(){
@@ -17,10 +16,12 @@ async function deploy(){
     await multiSigWallet.deployed()
     console.log("MultiSigWallet address: ", multiSigWallet.address)
 
+
     createConfig({
+      chainId: ethers.provider._network.chainId,
       bridge: bridge.address,
       multiSigWallet: multiSigWallet.address
-    }, "localhost")
+    }, ethers.provider._network.chainId)
 
     }catch(e){
       console.error(e)
