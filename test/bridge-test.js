@@ -17,7 +17,7 @@ describe.only("Bridge",function(){
 
         console.log(data)
 
-        const tx = await bridge.bridge("0x0A756834ef1109C4fC2017b12F2357C7C73F7606",data,1338)
+        const tx = await bridge.bridge("0xe7DA83466F0bB83975e58F0FC78880B63dc8F774",data,3)
         console.log(await tx.wait())
         // console.log(tx)
     })

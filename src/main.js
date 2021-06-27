@@ -12,24 +12,16 @@ async function main() {
 
     const network = process.argv[2]
 
-    let validNetwork = false
-    const keys = Object.keys(secret)
-    for (key of keys) {
-        if (key == network) {
-            validNetwork = true
-            break
+    const mainWeb3 = new Web3('ws://'+secret[network].url)
+    let sideWeb3s = {}
+    for([key,value] of Object.entries(secret)){
+        if(key!=network){
+            sideWeb3s[key] = new Web3('ws://'+value.url)
+            sideWeb3s[key].eth.accounts.wallet.add(value.privateKey)
         }
     }
 
-    if (!validNetwork) {
-        throw new Error("wrong network")
-    }
-
-    const mainProvider = new ethers.providers.WebSocketProvider("ws://" + secret[network].url)
-
-
-    const sideProvider = new ethers.providers.WebSocketProvider("ws://localhost:8544")
-    const stalker1 = new Stalker(mainProvider, sideProvider, config, network, secret)
+    const stalker1 = new Stalker(mainWeb3, sideWeb3s, config, network, secret)
     stalker1.run()
 
 }
